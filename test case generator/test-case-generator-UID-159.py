@@ -56,7 +56,7 @@ ofac_list.columns = ['uid', 'name', 'entity_type']
 
 ofac_list_filtered = ofac_list[(ofac_list.entity_type == '-0- ')] # only evaluate entities
 # randomly choose 10 rows
-ofac_list_sampled = ofac_list_filtered.sample(n = 10)
+ofac_list_sampled = ofac_list_filtered.sample(n = 500)
 print(ofac_list_sampled)
 
 # ---------------------
@@ -78,4 +78,4 @@ for index, row in ofac_list_sampled.iterrows():
     final_test_name = modified_name.upper()
     final_test_cases.loc[len(final_test_cases)] = [uid, theme, category, sub_category, entity_type, uid + ' - ' + str(index), row['uid'], row['name'], final_test_name] # append to the dataframe
     
-print(final_test_cases)
+final_test_cases.to_csv('final_test_cases_159.csv', index=False, columns=['UID', 'Theme', 'Category', 'Sub-category', 'Entity-Type', 'Original Name', 'Test Case Name'])
