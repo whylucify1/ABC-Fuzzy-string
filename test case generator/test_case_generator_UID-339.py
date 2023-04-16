@@ -10,9 +10,9 @@ entity_type = 'Entity'
 
 # ********************
 #%%
-import numpy as np
-x = 5 # change when you want different results
-np.random.seed(x)
+#import numpy as np
+#x = 5 # change when you want different results
+#np.random.seed(x)
 # ------------------------------------
 # IMPORT DATA, PACKAGES, AND FUNCTIONS
 # ------------------------------------
@@ -33,7 +33,7 @@ def add_noise_between_words(input_string, n_noise):
     # Add the specified number of noise elements between words
     for i in range(n_noise):
         # Choose a random index to insert the noise element
-        index = random.randint(1, len(words) - 1)
+        index = random.randint(1, len(words))
         
         # Choose a random noise element from the list of possible noise words
         noise = random.choice(noise_words)
@@ -53,11 +53,13 @@ ofac_list_download = pd.read_csv('https://www.treasury.gov/ofac/downloads/sdn.cs
 ofac_list = ofac_list_download[[0,1,2]]
 ofac_list.columns = ['uid', 'name', 'entity_type']
 
+
+#%%
 # filter for the requirements of the specific test case type
 
 ofac_list_filtered = ofac_list[(ofac_list.entity_type == '-0- ')] # only evaluate entities
 # randomly choose 10 rows
-ofac_list_sampled = ofac_list_filtered.sample(n = 10)
+ofac_list_sampled = ofac_list_filtered.sample(n = 500)
 print(ofac_list_sampled)
 
 #%%
@@ -77,3 +79,7 @@ for index, row in ofac_list_sampled.iterrows():
     final_name = add_noise_between_words(row['name'], 2)
     final_test_cases.loc[len(final_test_cases)] = [uid, theme, category, sub_category, entity_type, uid + '-' + str(index), row['uid'], row['name'], final_name]
 print(final_test_cases)
+
+#%%
+
+final_test_cases.to_csv('new csv files/339.csv', index=False)   

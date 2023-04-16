@@ -13,9 +13,9 @@ entity_type = 'entity'
 # ********************
 
 #%%
-import numpy as np
-x = 5 # change when you want different results
-np.random.seed(x)
+#import numpy as np
+#x = 5 # change when you want different results
+#np.random.seed(x)
 # ------------------------------------
 # IMPORT DATA, PACKAGES, AND FUNCTIONS
 # ------------------------------------
@@ -50,7 +50,7 @@ def rand_name():
 
 ofac_list_filtered = ofac_list[(ofac_list.entity_type == '-0- ')] # only evaluate entities
 # randomly choose 10 rows
-ofac_list_sampled = ofac_list_filtered.sample(n = 10)
+ofac_list_sampled = ofac_list_filtered.sample(n = 500)
 print(ofac_list_sampled)
 
 #%%
@@ -68,7 +68,10 @@ for index, row in ofac_list_sampled.iterrows():
     busdes_name = row['name']
     words = busdes_name.split()
     first_word = words[0]
-    second_word = words[1]
+    if len(words) >= 2:
+        second_word = words[1]
+    else:
+        second_word = ""
     final_test_name = [first_word, rand_name()] + words[2:]
     final_test_name = " ".join(final_test_name)
     final_test_name = final_test_name.title()
@@ -77,4 +80,6 @@ for index, row in ofac_list_sampled.iterrows():
     print(final_test_name)
     
     
-    
+#%%
+
+final_test_cases.to_csv('new csv files/124.csv', index=False)      

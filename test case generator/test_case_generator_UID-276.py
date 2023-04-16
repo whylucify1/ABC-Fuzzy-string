@@ -1,4 +1,3 @@
-
 # ********************
 
 # ------------------------------------
@@ -14,9 +13,9 @@ entity_type = 'Entity'
 # ********************
 
 #%%
-import numpy as np
-x = 45 # change when you want different results
-np.random.seed(x)
+#import numpy as np
+#x = 45 # change when you want different results
+#np.random.seed(x)
 # ------------------------------------
 # IMPORT DATA, PACKAGES, AND FUNCTIONS
 # ------------------------------------
@@ -42,7 +41,7 @@ ofac_list.columns = ['uid', 'name', 'entity_type']
 
 ofac_list_filtered = ofac_list[(ofac_list.entity_type == '-0- ')] # only evaluate individuals
 # randomly choose 10 rows
-ofac_list_sampled = ofac_list_filtered.sample(n = 10)
+ofac_list_sampled = ofac_list_filtered.sample(n = 500)
 print(ofac_list_sampled)
 
 
@@ -75,4 +74,7 @@ for index, row in ofac_list_sampled.iterrows():
         final_test_name = separated_words[0][0:]
         print(final_test_name)
         final_test_cases.loc[len(final_test_cases)] = [uid, theme, category, sub_category, entity_type, uid + ' - ' + str(index), row['uid'], row['name'], final_test_name] # append to the dataframe
+
 #%%
+
+final_test_cases.to_csv('new csv files/276.csv', index=False)   

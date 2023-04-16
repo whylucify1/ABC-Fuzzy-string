@@ -13,7 +13,7 @@ entity_type = 'entity'
 
 #%%
 import numpy as np
-x = 5 # change when you want different results
+x = 10 # change when you want different results
 np.random.seed(x)
 # ------------------------------------
 # IMPORT DATA, PACKAGES, AND FUNCTIONS
@@ -28,16 +28,16 @@ import random
 def add_special_character(sentence):
     """
     Splits the sentence into words and adds a random special character
-    in the middle of words that are three letters or shorter, only if the
-    overall length of the sentence is less than or equal to 5 letters.
+    in the middle of words that are six letters or shorter, only if the
+    overall length of the sentence is less than or equal to 10 letters.
     """
     special_chars = ["@", "#", "$", "&", "*"]
     words = sentence.split()
     new_words = []
     sentence_length = sum(len(word) for word in words)
-    if sentence_length <= 5:
+    if sentence_length <= 10:
         for word in words:
-            if len(word) <= 3:
+            if len(word) <= 6:
                 special_char = random.choice(special_chars)
                 mid_index = len(word) // 2
                 word = word[:mid_index] + special_char + word[mid_index:]
@@ -59,7 +59,7 @@ ofac_list.columns = ['uid', 'name', 'entity_type']
 
 ofac_list_filtered = ofac_list[(ofac_list.entity_type == '-0- ')] # only evaluate entities
 # randomly choose 10 rows
-ofac_list_sampled = ofac_list_filtered.sample(n = 10)
+ofac_list_sampled = ofac_list_filtered.sample(n = 500)
 print(ofac_list_sampled)
 
 #%%
@@ -81,3 +81,7 @@ for index, row in ofac_list_sampled.iterrows():
     final_test_cases.loc[len(final_test_cases)] = [uid, theme, category, sub_category, entity_type, uid + ' - ' + str(index), row['uid'], row['name'], final_test_name.upper()]
  
     print(final_test_name)
+
+#%%
+
+final_test_cases.to_csv('new csv files/347.csv', index=False)   

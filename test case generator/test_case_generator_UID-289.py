@@ -19,9 +19,9 @@ entity_type = 'individual'
 
 #%%
 import pandas as pd
-import numpy as np
-x = 5 # change when you want different results
-np.random.seed(x)
+#import numpy as np
+#x = 5 # change when you want different results
+#np.random.seed(x)
 import random
 import string
 
@@ -47,7 +47,7 @@ ofac_list = ofac_list_download[[0,1,2]]
 ofac_list.columns = ['uid', 'name', 'entity_type']
 
 ofac_list_filtered = ofac_list[(ofac_list.entity_type == 'individual')]
-ofac_list_sampled = ofac_list_filtered.sample(n = 10)
+ofac_list_sampled = ofac_list_filtered.sample(n = 500)
 print(ofac_list_sampled)
 
 #%%
@@ -59,3 +59,7 @@ for index, row in ofac_list_sampled.iterrows():
     final_test_cases.loc[len(final_test_cases)] = [uid, theme, category, sub_category, entity_type, uid + ' - ' + str(index), row['uid'], row['name'], final_test_name]
 
 print(final_test_cases)
+
+#%%
+
+final_test_cases.to_csv('new csv files/289.csv', index=False)   

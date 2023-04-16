@@ -41,7 +41,7 @@ ofac_list.columns = ['uid', 'name', 'entity_type']
 
 ofac_list_filtered = ofac_list[(ofac_list.entity_type == 'individual')] # only evaluate entities
 # randomly choose 10 rows
-ofac_list_sampled = ofac_list_filtered.sample(n = 10)
+ofac_list_sampled = ofac_list_filtered.sample(n = 500)
 print(ofac_list_sampled)
 
 #%%
@@ -76,7 +76,7 @@ for index, row in ofac_list_sampled.iterrows():
         separated_words = separate_words_in_name_3(row['name']) # separate the name into distinct words
       
 
-        final_test_name = separated_words[0] + ' '+ rand_name() + ' ' + rand_name() + ' ' + rand_name() + ' ' + separated_words[2] + '.'  #create the test case        
+        final_test_name = separated_words[2] + ',' + ' '+ separated_words[0] + ' ' + rand_name() + ' ' + rand_name() + ' ' + rand_name() #create the test case        
         final_test_cases.loc[len(final_test_cases)] = [uid, theme, category, sub_category, entity_type, uid + ' - ' + str(index), row['uid'], row['name'], final_test_name.upper()] # append to the dataframe
         print(final_test_name)
         
@@ -84,8 +84,12 @@ for index, row in ofac_list_sampled.iterrows():
     else: 
         separated_words = separate_words_in_name_2(row['name']) # separate the name into distinct words
         
-        final_test_name = separated_words[0] +' '+ separated_words[1] + '.'  #create the test case        
+        final_test_name = separated_words[1] +',' +' '+ separated_words[0]  #create the test case        
         final_test_cases.loc[len(final_test_cases)] = [uid, theme, category, sub_category, entity_type, uid + ' - ' + str(index), row['uid'], row['name'], final_test_name.upper()] # append to the dataframe
-        print(final_test_name)
-        
-        
+        print(final_test_name) 
+
+
+
+#%%
+
+final_test_cases.to_csv('new csv files/121.csv', index=False)  
