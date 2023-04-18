@@ -1,4 +1,3 @@
-
 # ********************
 
 # ------------------------------------
@@ -14,9 +13,9 @@ entity_type = 'individual'
 # ********************
 
 #%%
-import numpy as np
-x = 6 # change when you want different results
-np.random.seed(x)
+#import numpy as np
+#x = 5 # change when you want different results
+#np.random.seed(x)
 # ------------------------------------
 # IMPORT DATA, PACKAGES, AND FUNCTIONS
 # ------------------------------------
@@ -82,13 +81,12 @@ for index, row in ofac_list_sampled.iterrows():
         
         
     else: 
-        separated_words = separate_words_in_name_2(row['name']) # separate the name into distinct words
+        pass
+        #separated_words = separate_words_in_name_2(row['name']) # separate the name into distinct words
         
-        final_test_name = separated_words[1] +',' +' '+ separated_words[0]  #create the test case        
-        final_test_cases.loc[len(final_test_cases)] = [uid, theme, category, sub_category, entity_type, uid + ' - ' + str(index), row['uid'], row['name'], final_test_name.upper()] # append to the dataframe
-        print(final_test_name) 
-
-
+        #final_test_name = separated_words[1] +',' +' '+ separated_words[0]  #create the test case        
+        #final_test_cases.loc[len(final_test_cases)] = [uid, theme, category, sub_category, entity_type, uid + ' - ' + str(index), row['uid'], row['name'], final_test_name.upper()] # append to the dataframe
+        #print(final_test_name) 
 
 #%%
 

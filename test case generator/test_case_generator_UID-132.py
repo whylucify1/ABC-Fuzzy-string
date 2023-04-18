@@ -41,49 +41,37 @@ print(ofac_list_sampled)
 
 #%%
 
-def change_designator(text, designators):
+import random
+
+def change_designators(text, designators):
     """
-    This function replaces a list of designators in a given string with their abbreviations.
+    This function replaces one designator in a given string with a random designator from the list of designators.
     """
+    new_designator = random.choice(designators)
     for designator in designators:
-        text = text.replace(designator, designator_abbr(designator))
+        if designator in text:
+            while new_designator == designator:
+                new_designator = random.choice(designators)
+            text = text.replace(designator, new_designator, 1)
+            break  # replace only one designator per iteration
     return text
 
-def designator_abbr(designator):
-    """
-    This function returns the abbreviation for a given designator.
-    Add additional designators and abbreviations as needed.
-    """
-    if designator == 'COMPANY':
-        return 'Co.'
-    elif designator == 'CORPORATION':
-        return 'Corp.'
-    elif designator == 'INCORPORATED':
-        return 'Inc.'
-    elif designator == 'LIMITED':
-        return 'Ltd.'
-    else:
-        return designator
 
-designators = ['COMPANY', 'CORPORATION', 'INCORPORATED', 'LIMITED']
-
+designators = ['INC.', 'PTE', 'LTD', 'LLC', 'CO.', 'CORP.', 'GMBH', 'S.A.', 'B.V.', 'AB', 'A/S', 'S.R.L.',
+               'OY', 'PTY. LTD.', 'PLC', 'LLP','BVBA', 'S.A.S.', 'K.K.', 'SDN. BHD.', 'LTDA.', 'SA/NV', 'S.A.R.L.U.', 'ASBL', 'K.S.', 'S.A. DE C.V.',
+               'LIMITED', 'S. DE H.', 'S.C.S.', 'E.U.', 'GMBH & CO. KG', 'LLC & CO. KG', 'PTY LTD', 'SP. Z O.O.']
 
 #%%
 
-# ---------------------
-# CREATE THE TEST CASES
-# ---------------------
-
 # create blank final test cases table
-
 final_test_cases = pd.DataFrame(columns=['UID', 'Theme','Category','Sub-category','Entity-Type','Test Case ID' , 'OFAC List UID', 'Original Name','Test Case Name'])
 
-#run loop to generate the test cases 
+# run loop to generate the test cases 
 for index, row in ofac_list_sampled.iterrows():
-    text = row['name']
-    final_test_name = change_designator(text, designators)
+    names = row['name']
+    final_test_name = change_designators(names, designators)
     final_test_name = final_test_name.upper()
-    final_test_cases.loc[len(final_test_cases)] = [uid, theme, category, sub_category, entity_type, uid + ' - ' + str(index), row['uid'], row['name'], final_test_name.upper()]
+    final_test_cases.loc[len(final_test_cases)] = [uid, theme, category, sub_category, entity_type, uid + ' - ' + str(index), row['uid'], row['name'], final_test_name]
     print(final_test_name)
  
     

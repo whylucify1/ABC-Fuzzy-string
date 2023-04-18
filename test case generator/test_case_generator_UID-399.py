@@ -15,23 +15,7 @@ entity_type = 'entity'
 #import numpy as np
 #x = 6 # change when you want different results
 #np.random.seed(x)
-# ------------------------------------
-# IMPORT DATA, PACKAGES, AND FUNCTIONS
-# ------------------------------------
-
-# import the relevant functions and packages
-
 import pandas as pd
-
-def split_noise_words(name):
-    noise_words = ['at', 'and', 'name', 'the', 'of', 'with', 'in', 'on', 'for', 'to']
-    words = name.split()
-    for i, word in enumerate(words):
-        if word.lower() in noise_words:
-            words[i] = word[:-2] + " " + word[-2:]
-    return ' '.join(words)
-
-#%%
 
 # download the OFAC list from the web
 
@@ -49,22 +33,25 @@ print(ofac_list_sampled)
 
 #%%
 
-# ---------------------
-# CREATE THE TEST CASES
-# ---------------------
+import pandas as pd
 
-# create blank final test cases table
+noise_words = ['at', 'and', 'name', 'the', 'with', 'in', 'on', 'for', 'to']
 
 final_test_cases = pd.DataFrame(columns=['UID', 'Theme','Category','Sub-category','Entity-Type','Test Case ID' , 'OFAC List UID', 'Original Name','Test Case Name'])
 
-#run loop to generate the test cases 
-
 for index, row in ofac_list_sampled.iterrows():
- 
-    final_test_name = split_noise_words(row['name'])
-    
-    final_test_cases.loc[len(final_test_cases)] = [uid, theme, category, sub_category, entity_type, uid + ' - ' + str(index), row['uid'], row['name'], final_test_name.upper()]
-    
+    name = row['name']
+    words = name.split()
+    new_words = []
+    for word in words:
+        if word.lower() in noise_words:
+            new_word = word[:-2] + " " + word[-2:]
+        else:
+            new_word = word
+        new_words.append(new_word)
+    final_test_name = " ".join(new_words).upper()
+    if any(word.lower() in noise_words for word in name.lower().split()):
+        final_test_cases.loc[len(final_test_cases)] = [uid, theme, category, sub_category, entity_type, uid + ' - ' + str(index), row['uid'], name, final_test_name]
     print(final_test_name)
 
 #%%
