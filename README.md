@@ -5,7 +5,7 @@ Under the U.S. Government and Department of Treasury, any U.S. citizen or entity
 Data size: 162608 rows * 15 columns</br>
 Python Packages used: H2O, PiML, numpy, pandas, and scikit learn </br>
 
-Methodology: 
+Methodology: </br>
      - Created 260 test case generators </br>
      - Researched fuzzy name matching algorithms </br>
      - Performed and evaluated machine learning models </br>
